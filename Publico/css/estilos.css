@@ -1,0 +1,212 @@
+* {
+    font-family: 'Roboto', 'Open Sans', Tahoma, Arial, sans-serif;
+    letter-spacing: 1px;
+    line-height: 1.5
+}
+
+body {
+  background-color: #fff;
+  font-size: 13px;
+  color: #333447;
+}
+
+*:not(.Text) {
+  outline: none !important;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, li {
+  margin: 0;
+}
+
+a {
+  color: #343638;
+  text-decoration: none;
+}
+
+.Transition, .Button {
+    -webkit-transition: all 0.15s ease;
+    -moz-transition: all 0.15s ease;
+    -o-transition: all 0.15s ease;
+    -ms-transition: all 0.15s ease;
+    transition: all 0.15s ease;
+}
+
+.inlineBlock > * {
+    display: inline-block;
+}
+.Subtitulo {
+    font-size: 18px;
+    margin: 0 0 15px 0;
+    font-weight: 300;
+}
+
+.textRight {
+    text-align: right!important;
+}
+
+.Sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #fafafa;
+  width: 250px;
+  box-sizing: border-box;
+  padding: 40px 20px;
+}
+
+.Sidebar a {
+  display: block;
+  padding: 12px;
+  color: #8c969e;
+  text-decoration: none;
+}
+.Sidebar a i {
+    opacity: .3;
+    margin-right: 5px;
+}
+.Sidebar a:hover, .Sidebar a.Selected {
+  color: #343638;
+}
+
+.Sidebar aside {
+  padding: 0 12px 0 50px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.Sidebar aside .userIcon {
+    position: absolute;
+    top: 4px;
+    left: 12px;
+}
+.Sidebar aside .userIcon i {
+    font-size: 28px;
+    opacity: .2;
+    margin: 0;
+}
+.Sidebar aside p.userEmail {
+    opacity: .5;
+    font-size: .85em;
+}
+.Sidebar h2, .Sidebar p {
+  font-size: 12px;
+}
+
+.Sidebar ul {
+  width: 100%;
+}
+
+.showMenu .navBar {
+  display: block;
+  padding: 10px 40px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.showMenu .navBar li {
+    margin-left: 5px;
+}
+.showMenu .navBar a i {
+    margin: 0;
+}
+.showMenu .navBar a {
+	display: inline-block;
+	background-color: #fafafa;
+	padding: 7px 15px;
+	font-size: 19px;
+}
+.showMenu .Contenido {
+  margin-left: 260px;
+  display: block;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.Contenido {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Login {
+  background-color: rgba(0, 0, 0, .015);
+  padding: 40px 60px;
+  border-radius: 3px;
+  width: 80%;
+  max-width: 450px;
+}
+
+.Login p {
+  margin: 0 0 15px 0;
+}
+
+.Login p:last-child {
+  margin: 0;
+}
+
+.menuTop {
+    border-bottom: 1px solid #d4d4d8;
+}
+
+.menuTop li {
+    padding:  0 10px;
+}
+
+.menuTop a {
+  padding: 10px 0px;
+  border-bottom: 1px solid transparent;
+  margin-bottom: -1px;
+  display: block;
+  color: #8c969e;
+}
+
+.menuTop a.Selected, .menuTop a:hover {
+    border-bottom: 1px solid #3972c9;
+    color: #343638;
+}
+
+
+.Table {
+    width: 100%;
+    margin: 10px 0;
+    background: #fff;
+    border-spacing: 0;
+    border-collapse: separate;
+    background-color: #fafafa;
+}
+
+.Table th {
+    padding: 12px;
+    text-align: left;
+    background-color: #3972c9;
+    color: #fff;
+}
+
+.Table td {
+    text-align: left;
+    padding: 12px;
+    vertical-align: top;
+    border-top: 3px solid #fff;
+}

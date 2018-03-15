@@ -1,0 +1,1 @@
+{$hooks->action->run("home")}

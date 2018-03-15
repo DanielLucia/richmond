@@ -1,0 +1,5 @@
+/App/.Composer/
+/.ftpconfig
+/App/.env
+/App/.Cache
+/App/Log
