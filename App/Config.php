@@ -16,7 +16,7 @@ $capsule->addConnection([
     'password'  => getenv('DB_PASS'),
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
-    'prefix'    => '',
+    'prefix'    => getenv('DB_PREFIX'),
 ]);
 $capsule->setEventDispatcher(new Dispatcher(new Container));
 $capsule->getContainer()->bind('paginator', 'Illuminate\Pagination\Paginator');

@@ -5,9 +5,7 @@ use Escuchable\App\Controller;
 use Escuchable\App\Menu;
 use Escuchable\App\Url;
 
-/*use Escuchable\Modelos\Categorias;
-use Escuchable\Modelos\Podcast;
-use Escuchable\Modelos\Episodios;*/
+use Escuchable\Modelos\Widgets;
 
 class configurationController extends Controller
 {
@@ -18,6 +16,7 @@ class configurationController extends Controller
         Menu::add(2, array('configuracion'), 'Configuración', 'configuration');
         Menu::add(2, array('configuracion'), 'Usuarios', 'usuarios');
         Menu::add(2, array('configuracion'), 'Grupos', 'grupos');
+        Menu::add(2, array('configuracion'), 'Widgets', 'widgets');
     }
     public static function index()
     {
@@ -26,7 +25,6 @@ class configurationController extends Controller
         $title = 'Configuración';
         $data = array(
             'title' => $title,
-            'bodyClass' => 'Categorias',
         );
 
         self::$view->assign($data);
@@ -41,7 +39,6 @@ class configurationController extends Controller
         $title = 'Usuarios';
         $data = array(
             'title' => $title,
-            'bodyClass' => 'Categorias',
         );
 
         self::$view->assign($data);
@@ -56,12 +53,24 @@ class configurationController extends Controller
         $title = 'Grupos';
         $data = array(
             'title' => $title,
-            'bodyClass' => 'Categorias',
         );
 
         self::$view->assign($data);
         self::$view->render('index');
 
     }
+    public static function widgets()
+    {
+        self::addAssets();
 
+        $title = 'Widgets';
+        $data = array(
+            'title' => $title,
+            'widgets' => Widgets::all(),
+        );
+
+        self::$view->assign($data);
+        self::$view->render('widgets');
+
+    }
 }

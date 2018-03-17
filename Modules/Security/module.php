@@ -10,6 +10,7 @@ Version: 0.0.1
 use Escuchable\App\Modulo;
 use Escuchable\App\Request;
 use Escuchable\App\Menu;
+use Escuchable\App\Session;
 
 class securityModule extends Modulo
 {
@@ -19,11 +20,9 @@ class securityModule extends Modulo
         $this->route = __DIR__;
         $this->has_configuration = true;
 
-        \phpSec\Common\Core::setStore('filesystem:App/.Cache/.phpSec');
-
         //Hooks
         self::$hooks->action->add("form.close", function() {
-        	return securityModule::generateToken();
+        	return securityModule::generateToken(15);
         });
         self::$hooks->action->add("form.post", function() {
         	return securityModule::validateToken();
@@ -33,13 +32,14 @@ class securityModule extends Modulo
         Menu::add(1, array('sidebar'), 'Seguridad', 'security', 'shield');
     }
 
-    public static function generateToken() {
-        $token = \phpSec\Common\Token::set('form');
+    public static function generateToken($length) {
+        $token = bin2hex(random_bytes($length));
+        Session::set('form.token', $token);
         return "<input type='hidden' name='token' value='". $token ."'>";
     }
 
     public static function validateToken() {
-        if (\phpSec\Common\Token::validate('form', Request::post('token')) ==false && Request::is('post')) {
+        if (Session::set('form.token') != Request::post('token') && Request::is('post')) {
             die('Invalid Token');
         }
     }

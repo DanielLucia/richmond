@@ -21,7 +21,7 @@
                     <a href="{$item.configuration}" class="Button Small">Configuración</a>
                 {/if}
                 {if $item.installed}
-                    <a href="{$item.url_action}" class="Button Small Danger">Desinstalar</a>
+                    <a href="{$item.url_action}" class="Button Small Danger Question" data-question="¿Estás seguro? Se perderán todos los datos realitvos al módulo.">Desinstalar</a>
                 {else}
                     <a href="{$item.url_action}" class="Button Small">Instalar</a>
                 {/if}

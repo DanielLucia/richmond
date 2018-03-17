@@ -41,13 +41,13 @@ class emailtaskModule extends Modulo
 
     /*public static function install()
     {
-        DB::statement(Utils::createTable(self::$db['table'], self::$db['fields']));
-        DB::statement('ALTER TABLE `'.self::$db['table'].'` CHANGE COLUMN `'.self::$db['primary'].'` `'.self::$db['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.self::$db['primary'].'`)');
+        DB::statement(Utils::createTable(Utils::table(self::$db['table']), self::$db['fields']));
+        DB::statement('ALTER TABLE `'.Utils::table(self::$db['table']).'` CHANGE COLUMN `'.self::$db['primary'].'` `'.self::$db['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.self::$db['primary'].'`)');
     }
 
     public static function uninstall()
     {
-        $sql = 'DROP TABLE ' . self::$db['table'];
+        $sql = 'DROP TABLE ' . Utils::table(self::$db['table']);
 
         DB::statement($sql);
     }

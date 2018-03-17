@@ -3,13 +3,14 @@ namespace Escuchable\Modelos;
 
 use Escuchable\App\Modelo as Modelo;
 
-class Cronjobs extends Modelo
+class Widgets extends Modelo
 {
     public $timestamps = true;
-    protected $table = 'cronjobs';
+    protected $table = 'widgets';
     protected $fillable = array(
         'slug',
-        'programacion',
+        'titulo',
+        'descripcion',
         'class',
         'method',
     );

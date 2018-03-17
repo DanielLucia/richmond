@@ -15,6 +15,7 @@ use Escuchable\App\Utils;
 
 use Escuchable\Modelos\Emails;
 use Escuchable\Modelos\Cronjobs;
+use Escuchable\Modelos\Widgets;
 
 use Illuminate\Database\Query\Expression as raw;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -54,23 +55,36 @@ class emailModule extends Modulo
 
     public static function install()
     {
-        DB::statement(Utils::createTable(self::$db['table'], self::$db['fields']));
-        DB::statement('ALTER TABLE `'.self::$db['table'].'` CHANGE COLUMN `'.self::$db['primary'].'` `'.self::$db['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.self::$db['primary'].'`)');
+        if (!Cronjobs::whereSlug('email')->first()) {
+            Cronjobs::create(array(
+                'slug' => 'email',
+                'programacion' => '*/5 0 0 0 0',
+                'class' => 'emailModule',
+                'method' => 'Cron',
+            ));
+        }
 
-        Cronjobs::create(array(
-            'slug' => 'email',
-            'programacion' => '*/5 0 0 0 0',
-            'tarea' => 'emailModule#Cron',
-        ));
+        if (!Widgets::whereSlug('email')->first()) {
+            Widgets::create([
+                'slug' => 'email',
+                'titulo' => 'Bandeja de entrada',
+                'descripcion' => 'Muestra los últimos emails',
+                'class' => 'emailModule',
+                'method' => 'Widget',
+            ]);
+        }
+
+
+        DB::statement(Utils::createTable(Utils::table(self::$db['table']), self::$db['fields']));
+        DB::statement('ALTER TABLE `'.Utils::table(self::$db['table']).'` CHANGE COLUMN `'.self::$db['primary'].'` `'.self::$db['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.self::$db['primary'].'`)');
     }
 
     public static function uninstall()
     {
-        $sql = 'DROP TABLE ' . self::$db['table'];
-
-        DB::statement($sql);
+        DB::statement('DROP TABLE ' . Utils::table(self::$db['table']));
 
         Cronjobs::whereSlug('email')->delete();
+        Widgets::whereSlug('email')->delete();
     }
 
     public function configutation()
@@ -88,5 +102,9 @@ class emailModule extends Modulo
 
         self::$view->assign($data);
         self::$view->render('index');
+    }
+
+    public static function Widget() {
+
     }
 }

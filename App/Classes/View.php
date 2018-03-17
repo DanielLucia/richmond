@@ -43,6 +43,7 @@ class View extends \Smarty
                 'menu' => Menu::get(),
                 //'session' => Session,
                 'showMenu' => $this->showMenu,
+                'memory_get_usage' => (memory_get_usage(true) /1024) . ' Kb.',
             );
 
             $this->assign($params);

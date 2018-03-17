@@ -1,3 +1,4 @@
 <footer class="Flex">
-    <p>escuchable.com</p>
+    <p>app.daniellucia.com</p>
+    <p>{$memory_get_usage}</p>
 </footer>

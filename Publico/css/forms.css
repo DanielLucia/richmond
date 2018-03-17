@@ -21,27 +21,28 @@ label {
     border: 1px solid rgba(0,0,0,.4);
 }
 .Button {
-    box-sizing: border-box;
-    padding: 10px;
-    background-color: #3972c9;
-    color: #fff;
-    border-radius: 3px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-    opacity: .7;
+	box-sizing: border-box;
+	padding: 5px 15px;
+	background-color: #09d;
+	color: #fff;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 0.9rem;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	margin: 0 3px;
+    font-size: 12px;
 }
 .Button.Danger {
     background-color: #b83b39;
 }
 .Button:hover {
-    opacity: 1;
+
 }
 .Button.buttonBlock {
     width: 100%;

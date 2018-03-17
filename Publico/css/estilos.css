@@ -183,7 +183,7 @@ a {
 }
 
 .menuTop a.Selected, .menuTop a:hover {
-    border-bottom: 1px solid #3972c9;
+    border-bottom: 1px solid #09d;
     color: #343638;
 }
 
@@ -200,7 +200,7 @@ a {
 .Table th {
     padding: 12px;
     text-align: left;
-    background-color: #3972c9;
+    background-color: #09d;
     color: #fff;
 }
 

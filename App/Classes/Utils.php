@@ -106,4 +106,8 @@ class Utils extends App
 
         return $result;
     }
+
+    public static function table($table) {
+        return getenv('DB_PREFIX').$table;
+    }
 }

@@ -11,8 +11,8 @@
             <h2 class="Subtitulo">{$title}</h2>
             {/if}
             {include file="$content"}
+            {include file="Includes/Elements/footer.tpl"}
         </div>
-
         {include file="Includes/Elements/javascript.tpl"}
     </body>
 </html>
