@@ -1,6 +1,6 @@
 <?php
 
-use Escuchable\App\Utils;
+use Escuchable\App\Url;
 
 /*
  * Smarty plugin
@@ -11,7 +11,7 @@ use Escuchable\App\Utils;
  * Purpose:  Formatea una url con dos parametros
  * -------------------------------------------------------------
  */
-function smarty_modifier_url($routeName, $params)
+function smarty_modifier_url($routeName, $params = array())
 {
-    echo Utils::generate($routeName, $params);
+    echo Url::generate($routeName, $params);
 }

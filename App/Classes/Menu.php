@@ -32,6 +32,9 @@ class Menu extends App
             foreach ($elemento as $posicion => $item) {
                 foreach ($item as $subitem) {
                     $subitem['class'] =  $subitem['id'] == self::$actual && self::$actual ? 'Selected' : '';
+
+                    $hook = $lugar . ".menu." . $subitem['id'];
+                    $subitem['texto'] = self::$hooks->filter->apply($hook, $subitem['texto']);
                     $salida[$lugar][] = $subitem;
                 }
             }

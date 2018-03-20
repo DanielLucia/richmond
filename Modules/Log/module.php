@@ -71,8 +71,16 @@ class logModule extends Modulo
 
     }
     public function configutation() {
+        $title = 'Log';
+        $data = array(
+            'title' => $title,
+            //'emails' => Emails::all(),
+        );
 
+        self::$view->assign($data);
+        self::$view->render('index');
     }
+
     public static function install()
     {
         //DB::statement(Utils::createTable(Utils::table(self::$db['table']), self::$db['fields']));

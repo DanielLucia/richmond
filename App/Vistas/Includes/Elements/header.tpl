@@ -28,7 +28,7 @@
             {if $item.icon}
                 <li>
                     <a href="{$item.url}" class="{$item.class}">
-                        <i class="fa fa-{$item.icon}" aria-hidden="true"></i>
+                        <i class="fa fa-{$item.icon}" aria-hidden="true"></i> {$item.texto}
                     </a>
                 </li>
                 {/if}

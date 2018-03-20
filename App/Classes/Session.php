@@ -155,7 +155,7 @@ class Session {
             return $v;
         }else {
             foreach ($t as $x => $y)
-                $s[$x] = self::$encriptar($y);
+                $s[$x] = self::encriptar($y);
             return $s;
         }
     }
@@ -173,7 +173,7 @@ class Session {
             return urldecode($v);
         } else {
             foreach ($t as $x => $y)
-                $s[$x] = self::$desencriptar($y);
+                $s[$x] = self::desencriptar($y);
             return $s;
         }
     }

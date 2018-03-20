@@ -1,9 +1,11 @@
 <table class="Table">
-    <tr>
-        <th>Widget</th>
-        <th>Descripción</th>
-        <th width="250"></th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Widget</th>
+            <th>Descripción</th>
+            <th width="250"></th>
+        </tr>
+    </thead>
     {foreach from=$widgets key=key item=item}
         <tr>
             <td>

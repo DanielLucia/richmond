@@ -7,11 +7,19 @@
     <body class="{if $showMenu}showMenu{/if}">
         {include file="Includes/Elements/header.tpl"}
         <div class="Contenido">
-            {if $title}
+            {if $flash}
+            <div class="Alert">
+                <p><strong>{$flash.title}</strong></p>
+                <p>{$flash.content}</p>
+            </div>
+            {/if}
+            {if $title && $showMenu}
             <h2 class="Subtitulo">{$title}</h2>
             {/if}
             {include file="$content"}
-            {include file="Includes/Elements/footer.tpl"}
+            {if $showMenu}
+                {include file="Includes/Elements/footer.tpl"}
+            {/if}
         </div>
         {include file="Includes/Elements/javascript.tpl"}
     </body>

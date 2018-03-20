@@ -24,5 +24,11 @@ $capsule->getContainer()->bind('LengthAwarePaginator', 'Illuminate\Pagination\Le
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
+//Url principal
 define('BASE_URL', getenv('BASE_URL'));
+
+//Otras rutas
+define('PUBLIC_FOLDER', BASE_URL . 'Publico/');
+define('MODULES_FOLDER', BASE_URL . 'Modulos/');
+
 include(ROOT . 'App/Classes/Funciones.php');

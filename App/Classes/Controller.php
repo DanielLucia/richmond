@@ -1,6 +1,8 @@
 <?php
 namespace Escuchable\App;
 
+use Stolz\Assets\Manager\Assets;
+
 class Controller extends App
 {
     public function __construct() {
@@ -9,18 +11,19 @@ class Controller extends App
 
     public static function addAssets()
     {
-        Assets::addCss('font-awesome.css');
-        Assets::addCss('normalize.css');
-        Assets::addCss('estilos.css');
-        Assets::addCss('simple-grid.min.css');
-        Assets::addCss('forms.css');
-        Assets::addCss('toastr.css');
-        Assets::addCss('sweetalert.css');
-        Assets::addCss('https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700');
+        self::$assets->add(PUBLIC_FOLDER . 'css/font-awesome.css');
+        self::$assets->add(PUBLIC_FOLDER . 'css/normalize.css');
+        self::$assets->add(PUBLIC_FOLDER . 'css/estilos.css');
+        //self::$assets->add(PUBLIC_FOLDER . 'css/simple-grid.min.css');
+        self::$assets->add(PUBLIC_FOLDER . 'css/forms.css');
+        self::$assets->add(PUBLIC_FOLDER . 'css/toastr.css');
+        self::$assets->add(PUBLIC_FOLDER . 'fonts/stylesheet.css');
+        //self::$assets->add(PUBLIC_FOLDER . 'css/sweetalert.css');
+        //self::$assets->add(PUBLIC_FOLDER . 'css/https://fonts.googleapis.com/css?family=Roboto:400,400i,500,700');
 
-        Assets::addJS('jquery-3.3.1.js');
-        Assets::addJS('toastr.min.js');
-        Assets::addJS('sweetalert.js');
-        Assets::addJS('functions.js');
+        self::$assets->add(PUBLIC_FOLDER . 'js/jquery-3.3.1.js');
+        //self::$assets->add(PUBLIC_FOLDER . 'js/toastr.min.js');
+        //self::$assets->add(PUBLIC_FOLDER . 'js/sweetalert.js');
+        self::$assets->add(PUBLIC_FOLDER . 'js/functions.js');
     }
 }

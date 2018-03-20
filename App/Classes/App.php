@@ -10,6 +10,7 @@ use Katzgrau\KLogger\Logger as Logger;
 use AltoRouter as AltoRouter;
 use daniellucia\Hooks\Manager as Manager;
 use Hautelook\Phpass\PasswordHash;
+use Carbon\Carbon;
 
 use Escuchable\App\Auth;
 use Escuchable\App\Menu;
@@ -32,6 +33,7 @@ class App
     public static $controllers;
     public static $modules;
     public static $hasher;
+    public static $assets;
 
     public static function init()
     {
@@ -41,10 +43,11 @@ class App
         if (Request::is('post')) {
             self::$hooks->action->run("form.post");
         }
-
+        Carbon::setLocale('es');
         self::$router = new AltoRouter();
         self::$logger = new Logger(ROOT . 'App/Log');
         self::$hasher = new PasswordHash(8, false);
+        self::$assets = new \Stolz\Assets\Manager();
         self::loadControllers();
         self::loadModules();
         self::generateRoute();
@@ -133,9 +136,11 @@ class App
 
                 include_once($fileModule);
                 $moduleDetail = Modulo::getDetail($fileModule);
+
                 self::$modules[$moduleDetail['Slug']] = $moduleDetail;
                 self::$modules[$moduleDetail['Slug']]['ModuleName'] = $moduleName;
                 self::$modules[$moduleDetail['Slug']]['folder'] = $module;
+                self::$modules[$moduleDetail['Slug']]['Dependecies'] = explode(',', self::$modules[$moduleDetail['Slug']]['Dependecies']);
             }
         }
 
@@ -192,7 +197,7 @@ class App
         if (is_array($match) && is_callable(array($map[0], $map[1]))) {
             $folderView = self::$section[$match['name']]['folder'];
             $controller = new self::$section[$match['name']]['controller'];
-            
+
             Menu::setActual($match['name']);
 
             if ((!isset($controller->login) || $controller->login == false) && !Auth::isLogin()) {
@@ -213,9 +218,9 @@ class App
             $error .= '<pre>'.print_r($match, 1).'</pre>';
             $error .= '<h1>Rutas</h1>';
             $error .= '<pre>'.print_r(self::$router, 1).'</pre>';
-
-            Flash::set($error, 'error', 'Vaya!');
-            Url::redirect(Url::generate('error'));
+            echo $error;
+            /*Flash::set($error, 'error', 'Vaya!');
+            Url::redirect(Url::generate('error'));*/
 
             self::$logger->debug('No ha habido coincidencias en la ruta', array($match));
             //Url::redirect(Url::generate('error'));

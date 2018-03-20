@@ -1,5 +1,5 @@
 * {
-    font-family: 'Roboto', 'Open Sans', Tahoma, Arial, sans-serif;
+    font-family: 'Clear Sans', 'Open Sans', Tahoma, Arial, sans-serif;
     letter-spacing: 1px;
     line-height: 1.5
 }
@@ -41,7 +41,12 @@ a {
   color: #343638;
   text-decoration: none;
 }
-
+.Flex {
+    display: flex;
+}
+.Flex > * {
+    width: 100%;
+}
 .Transition, .Button {
     -webkit-transition: all 0.15s ease;
     -moz-transition: all 0.15s ease;
@@ -68,16 +73,22 @@ a {
   left: 0;
   top: 0;
   bottom: 0;
-  background-color: #fafafa;
   width: 250px;
   box-sizing: border-box;
-  padding: 40px 20px;
+  color: #fff;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3f4a59+0,646189+100 */
+    background: rgb(63,74,89); /* Old browsers */
+    background: -moz-linear-gradient(45deg, rgba(63,74,89,1) 0%, rgba(100,97,137,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, rgba(63,74,89,1) 0%,rgba(100,97,137,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, rgba(63,74,89,1) 0%,rgba(100,97,137,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4a59', endColorstr='#646189',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    z-index: 2;
 }
 
 .Sidebar a {
   display: block;
-  padding: 12px;
-  color: #8c969e;
+  padding: 12px 30px;
+  color: #fff;
   text-decoration: none;
 }
 .Sidebar a i {
@@ -85,12 +96,12 @@ a {
     margin-right: 5px;
 }
 .Sidebar a:hover, .Sidebar a.Selected {
-  color: #343638;
+  background-color: rgba(255,255,255,.05);
 }
 
 .Sidebar aside {
   padding: 0 12px 0 50px;
-  margin-bottom: 20px;
+  margin: 20px;
   position: relative;
 }
 .Sidebar aside .userIcon {
@@ -116,29 +127,45 @@ a {
 }
 
 .showMenu .navBar {
-  display: block;
-  padding: 10px 40px;
-  box-sizing: border-box;
-  position: fixed;
-  top: 0;
-  right: 0;
+	display: block;
+	padding: 10px 40px;
+	box-sizing: border-box;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(255,255,255,.85);
+	z-index: 1;
 }
 .showMenu .navBar li {
     margin-left: 5px;
+    position: relative;
 }
 .showMenu .navBar a i {
     margin: 0;
+}
+.showMenu .navBar a span {
+	position: absolute;
+	background-color: #b83b39;
+	color: #fff;
+	padding: 2px 4px;
+	top: -2px;
+	right: -5px;
+	line-height: 1;
+	border-radius: 3px;
+	font-size: 10px;
 }
 .showMenu .navBar a {
 	display: inline-block;
 	background-color: #fafafa;
 	padding: 7px 15px;
 	font-size: 19px;
+    font-size: 11px;
 }
 .showMenu .Contenido {
   margin-left: 260px;
   display: block;
-  padding: 40px;
+  padding: 80px 40px;
   box-sizing: border-box;
 }
 
@@ -153,7 +180,6 @@ a {
 .Login {
   background-color: rgba(0, 0, 0, .015);
   padding: 40px 60px;
-  border-radius: 3px;
   width: 80%;
   max-width: 450px;
 }
@@ -197,11 +223,19 @@ a {
     background-color: #fafafa;
 }
 
+.Table thead {
+    color: #fff;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3f4a59+0,646189+100 */
+      background: rgb(63,74,89); /* Old browsers */
+      background: -moz-linear-gradient(45deg, rgba(63,74,89,1) 0%, rgba(100,97,137,1) 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(45deg, rgba(63,74,89,1) 0%,rgba(100,97,137,1) 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(45deg, rgba(63,74,89,1) 0%,rgba(100,97,137,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4a59', endColorstr='#646189',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
 .Table th {
     padding: 12px;
     text-align: left;
-    background-color: #09d;
-    color: #fff;
 }
 
 .Table td {
@@ -209,4 +243,21 @@ a {
     padding: 12px;
     vertical-align: top;
     border-top: 3px solid #fff;
+}
+
+
+footer {
+    box-sizing: border-box;
+    background-color: #fafafa;
+    padding: 14px;
+    margin: 25px 0 0 0;
+}
+
+
+.Alert {
+	padding: 20px 30px;
+	box-sizing: border-box;
+	color: #fff;
+	background-color: #b83b39;
+	margin: 0 0 25px 0;
 }

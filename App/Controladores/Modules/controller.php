@@ -4,6 +4,8 @@ use Escuchable\App\Utils as Utils;
 use Escuchable\App\Controller;
 use Escuchable\App\Menu;
 use Escuchable\App\Url;
+use Escuchable\App\Modulo;
+use Escuchable\App\Flash;
 
 use Escuchable\Modelos\Modulos;
 
@@ -33,6 +35,18 @@ class modulesController extends Controller
     public static function install($module)
     {
         $moduleDB = self::getModule($module);
+
+        if(!empty(self::$modules[$module]['Dependecies'])) {
+            foreach (self::$modules[$module]['Dependecies'] as $dependecy) {
+                if ($dependecy!= '') {
+                    if (!Modulo::installed($dependecy)) {
+                        Flash::set(sprintf('El módulo %s debe estar instalado', $dependecy), 'error', 'Vaya!');
+                        Url::redirect(Url::generate('modules'));
+                    }
+                }
+            }
+        }
+
         if ($moduleDB->class_name && method_exists($moduleDB->class_name, 'install')) {
             call_user_func(array($moduleDB->class_name, 'install'));
         }

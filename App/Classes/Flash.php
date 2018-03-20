@@ -7,7 +7,7 @@ class Flash extends App
 {
     public static function set($content, $type = 'info', $title = 'app')
     {
-        Session::set('flash.content', json_encode(array('content' => $content, 'title' => $title, 'type' => $type)));
+        Session::set('flash.content', array('content' => $content, 'title' => $title, 'type' => $type));
         return;
     }
     public static function get()

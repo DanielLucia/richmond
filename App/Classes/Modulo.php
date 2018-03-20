@@ -21,6 +21,7 @@ class Modulo extends App
                             'DomainPath' => 'Domain Path',
                             'Network' => 'Network',
                             'Slug' => 'Slug',
+                            'Dependecies' => 'Dependecies',
                             '_sitewide' => 'Site Wide Only',
                     );
 
@@ -62,5 +63,13 @@ class Modulo extends App
         }
 
         return $all_headers;
+    }
+
+    public static function installed($module) {
+        if (array_key_exists($module, self::$modules)) {
+            return self::$modules[$module]['installed'];
+        }
+
+        return false;
     }
 }

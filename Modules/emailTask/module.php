@@ -6,6 +6,7 @@ Slug: emailtask
 Description: Sistema para leer emails dentro del propio sistema.
 Version: 0.0.1
 Author: daniellucia.es
+Dependecies: email
 */
 
 use Escuchable\App\Modulo;
@@ -25,14 +26,6 @@ class emailtaskModule extends Modulo
     {
         $this->route = __DIR__;
         $this->has_configuration = true;
-
-        //Hooks
-        self::$hooks->action->add("form.close", function () {
-            return securityModule::generateToken();
-        });
-        self::$hooks->action->add("form.post", function () {
-            return securityModule::validateToken();
-        });
 
         //Menu
         Menu::add(1, array('navbar'), 'Bandeja de entrada', 'inbox', 'envelope-o');

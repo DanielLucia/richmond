@@ -19,7 +19,7 @@ class notificationController extends Controller
 
     public static function index()
     {
-        self::addAssets();
+        self::addAssets(); 
 
         $title = 'Notificaciones';
         $data = array(

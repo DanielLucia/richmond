@@ -29,7 +29,7 @@ class securityModule extends Modulo
         });
 
         //Menu
-        Menu::add(1, array('sidebar'), 'Seguridad', 'security', 'shield');
+        Menu::add(10, array('configuracion'), 'Seguridad', 'security', 'shield');
     }
 
     public static function generateToken($length) {
@@ -44,7 +44,14 @@ class securityModule extends Modulo
         }
     }
 
-    public function configutation() {
+    public static function configuration() {
+        $title = 'Seguridad';
+        $data = array(
+            'title' => $title,
+            //'emails' => Emails::all(),
+        );
 
+        self::$view->assign($data);
+        self::$view->render('index');
     }
 }

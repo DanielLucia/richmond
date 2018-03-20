@@ -1,0 +1,8 @@
+{
+	"name": "richmond",
+  	"version": "0.0.1",
+  	"description": "CMS multipropósito",
+	"dependencies": {
+		"jquery": "latest",
+	}
+}

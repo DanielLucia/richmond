@@ -3,16 +3,18 @@ namespace Escuchable\App;
 
 use Escuchable\App\Session;
 use Escuchable\App\Flash;
+use Carbon\Carbon;
 
 class View extends \Smarty
 {
     private $folderTemplate;
     public $showMenu = true;
+    private $tiempoInicial;
 
     public function __construct($route = false)
     {
         parent::__construct();
-
+        $this->tiempoInicial = microtime(true);
         $this->folderTemplate = $route;
         $this->setTemplateDir(ROOT . 'App/Vistas/');
         $this->setCompileDir(ROOT . 'App/.Cache/.compiled/');
@@ -32,18 +34,21 @@ class View extends \Smarty
     {
         $rutaView = $this->folderTemplate . ($template ? $template : 'index') . '.tpl';
         if (is_readable($rutaView)) {
+            
             $params = array(
-                'js' => Assets::getJS(),
-                'css' => Assets::getCss(),
-                'css_out' => Assets::getCssOut(),
+                //'js' => Assets::getJS(),
+                //'css' => Assets::getCss(),
+                //'css_out' => Assets::getCssOut(),
                 'flash'=> Flash::get(),
                 'content' => $rutaView,
                 'version' => getenv('VERSION'),
                 'hooks' => App::$hooks,
                 'menu' => Menu::get(),
-                //'session' => Session,
+                'assets' => App::$assets,
                 'showMenu' => $this->showMenu,
-                'memory_get_usage' => (memory_get_usage(true) /1024) . ' Kb.',
+                'memoryGetUsage' => (memory_get_usage() /1024) . ' Kb.',
+                'tiempoEjecucion' => round(microtime(true) - $this->tiempoInicial, 4) .' segundos',
+                'carbon' => Carbon::class,
             );
 
             $this->assign($params);

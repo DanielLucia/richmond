@@ -1,5 +1,5 @@
 <?php
 
 return array(
-  array('GET','/log/', 'logModule#configuration', 'log'),
+  array('GET','/security/', 'securityModule#configuration', 'security'),
 );

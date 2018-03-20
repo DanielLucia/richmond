@@ -1,7 +1,6 @@
 label {
     display: block;
     font-weight: bold;
-    text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 0.9rem;
     margin: 0 0 5px 0;
@@ -11,7 +10,6 @@ label {
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
-    border-radius: 3px;
     border: 1px solid rgba(0,0,0,.2);
 }
 .Text:hover {
@@ -22,21 +20,17 @@ label {
 }
 .Button {
 	box-sizing: border-box;
-	padding: 5px 15px;
-	background-color: #09d;
+	padding: 15px 15px;
 	color: #fff;
-	border-radius: 3px;
 	border: none;
 	cursor: pointer;
-	font-weight: bold;
-	text-transform: uppercase;
 	letter-spacing: 1px;
 	font-size: 0.9rem;
 	text-decoration: none;
 	display: inline-block;
 	text-align: center;
 	margin: 0 3px;
-    font-size: 12px;
+    background-color: #5b68bc;
 }
 .Button.Danger {
     background-color: #b83b39;

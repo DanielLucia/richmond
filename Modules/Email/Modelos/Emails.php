@@ -9,9 +9,15 @@ class Emails extends Modelo
     protected $table = 'emails';
     protected $fillable = array(
         'id',
+        'uid',
+        'id_email',
+        'mailbox',
         'user_id',
         'title',
+        'email_from',
+        'email_to',
         'body',
+        'date',
     );
 
 }

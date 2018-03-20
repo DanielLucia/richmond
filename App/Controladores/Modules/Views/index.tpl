@@ -1,10 +1,12 @@
 <table class="Table">
-    <tr>
-        <th width="200"></th>
-        <th>Módulo</th>
-        <th>Descripción</th>
-        <th width="250"></th>
-    </tr>
+    <thead>
+        <tr>
+            <th width="200"></th>
+            <th>Módulo</th>
+            <th>Descripción</th>
+            <th width="250"></th>
+        </tr>
+    </thead>
     {foreach from=$modules key=key item=item}
         <tr>
             <td>{$key}</td>
