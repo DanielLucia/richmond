@@ -1,5 +1,6 @@
 /App/.Composer/
 /.ftpconfig
+node_modules/
 /App/.env
-/App/.Cache
-/App/Log
+/App/.Cache/
+/App/Log/
