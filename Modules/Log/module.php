@@ -70,7 +70,7 @@ class logModule extends Modulo
         logHistory::create($data);
 
     }
-    public function configutation() {
+    public function configuration() {
         $title = 'Log';
         $data = array(
             'title' => $title,

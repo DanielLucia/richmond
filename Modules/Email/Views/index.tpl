@@ -1,4 +1,3 @@
-<a href="{'sync_inbox'|url}">Actualizar</a>
 <table class="Table">
     <thead>
         <tr>
@@ -13,7 +12,11 @@
         <tr>
             <td><input type="checkbox" name="email[]" /></td>
             <td>
+                {if $item.leido == 0}
                 <strong><a href="{'inbox_detail'|url:['uid' => $item.uid]}">{$item.title}</a></strong>
+                {else}
+                <a href="{'inbox_detail'|url:['uid' => $item.uid]}">{$item.title}</a>
+                {/if}
             </td>
             <td>{$item.email_from}</td>
             <td><small>{$carbon::now()->diffForHumans($carbon::parse($item.date), true, false, 2)}</small></td>

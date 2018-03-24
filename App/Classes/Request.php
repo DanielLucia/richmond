@@ -8,12 +8,21 @@ class Request extends App
         return ($_SERVER['REQUEST_METHOD'] == strtoupper($method));
     }
 
-    public static function post($key) {
-        return filter_var($_POST[$key], FILTER_SANITIZE_STRING);
+    public static function post($key = false) {
+        if ($key) {
+            return filter_var($_POST[$key], FILTER_SANITIZE_STRING);
+        } else {
+            return $_POST;
+        }
     }
 
-    public static function get($key) {
-        return filter_var($_GET[$key], FILTER_SANITIZE_STRING);
+    public static function get($key = false) {
+        if ($key) {
+            return filter_var($_GET[$key], FILTER_SANITIZE_STRING);
+        } else {
+            return $_GET;
+        }
+
     }
 
     public static function put($key) {

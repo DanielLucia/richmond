@@ -48,7 +48,9 @@ class modulesController extends Controller
         }
 
         if ($moduleDB->class_name && method_exists($moduleDB->class_name, 'install')) {
-            call_user_func(array($moduleDB->class_name, 'install'));
+            $classTemp = new $moduleDB->class_name;
+            $classTemp->install();
+            //call_user_func(array($moduleDB->class_name, 'install'));
         }
 
         $moduleDB->instalado = 1;
@@ -62,7 +64,9 @@ class modulesController extends Controller
     {
         $moduleDB = self::getModule($module);
         if ($moduleDB->class_name && method_exists($moduleDB->class_name, 'uninstall')) {
-            call_user_func(array($moduleDB->class_name, 'uninstall'));
+            $classTemp = new $moduleDB->class_name;
+            $classTemp->uninstall();
+            //call_user_func(array($moduleDB->class_name, 'uninstall'));
         }
         $moduleDB->delete();
 

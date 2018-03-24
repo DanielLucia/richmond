@@ -45,7 +45,7 @@ class emailtaskModule extends Modulo
         DB::statement($sql);
     }
 
-    public function configutation()
+    public function configuration()
     {
     }*/
 

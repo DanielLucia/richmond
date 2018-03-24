@@ -3,7 +3,7 @@
 /*
 Plugin Name: Email
 Slug: email
-Description: PermiteU leer emails dentro del sistema
+Description: Permite leer emails dentro del sistema
 Version: 0.0.1
 Author: daniellucia.es
 */
@@ -14,8 +14,10 @@ use Escuchable\App\Menu;
 use Escuchable\App\Utils;
 use Escuchable\App\Session;
 use Escuchable\App\Url;
+use Escuchable\App\Flash;
 
 use Escuchable\Modelos\Emails;
+use Escuchable\Modelos\emailsAccount;
 use Escuchable\Modelos\Cronjobs;
 use Escuchable\Modelos\Widgets;
 use Escuchable\Modelos\Configuracion;
@@ -25,48 +27,36 @@ use Illuminate\Database\Capsule\Manager as DB;
 
 class emailModule extends Modulo
 {
-    public static $db = [
-        'table' => 'emails',
-        'fields' => [
-            ['id', 'INT'],
-            ['uid', 'INT'],
-            ['user_id', 'INT'],
-            ['id_email', 'VARCHAR (100)'],
-            ['title', 'VARCHAR (200)'],
-            ['email_from', 'VARCHAR (100)'],
-            ['email_to', 'VARCHAR (100)'],
-            ['body', 'TEXT'],
-            ['mailbox', 'VARCHAR (100)'],
-            ['date', 'DATETIME'],
-            ['created_at', 'DATETIME'],
-            ['updated_at', 'DATETIME'],
-        ],
-        'primary' => 'id',
-    ];
-
     public function __construct()
     {
         $this->route = __DIR__;
         $this->has_configuration = true;
+        self::$modelo = include($this->route . '/.db/model.php');
 
         //Menu
         Menu::add(1, array('navbar'), 'Bandeja de entrada', 'inbox', 'envelope-o');
+        Menu::add(2, array('configuracion'), 'Cuentas de correo', 'emails_accounts');
 
         //Hooks
-        self::$hooks->filter->add("navbar.menu.inbox", function($value) {
-        	return '<span>' . Configuracion::obtain('emails.total') . '</span>';
+        self::$hooks->filter->add("navbar.menu.inbox", function ($value) {
+            $totalEmails = Configuracion::obtain('emails.total');
+            if ($totalEmails > 0) {
+                return '<span>' . $totalEmails . '</span>';
+            }
         });
     }
 
 
     public static function install()
     {
+        parent::install();
+
         if (!Cronjobs::whereSlug('email')->first()) {
             Cronjobs::create(array(
                 'slug' => 'email',
-                'programacion' => '*/5 0 0 0 0',
+                'programacion' => '*/5 0 * * *',
                 'class' => 'emailModule',
-                'method' => 'Cron',
+                'method' => 'sync',
             ));
         }
 
@@ -79,15 +69,11 @@ class emailModule extends Modulo
                 'method' => 'Widget',
             ]);
         }
-
-
-        DB::statement(Utils::createTable(Utils::table(self::$db['table']), self::$db['fields']));
-        DB::statement('ALTER TABLE `'.Utils::table(self::$db['table']).'` CHANGE COLUMN `'.self::$db['primary'].'` `'.self::$db['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.self::$db['primary'].'`)');
     }
 
     public static function uninstall()
     {
-        DB::statement('DROP TABLE ' . Utils::table(self::$db['table']));
+        parent::uninstall();
 
         Cronjobs::whereSlug('email')->delete();
         Widgets::whereSlug('email')->delete();
@@ -95,67 +81,97 @@ class emailModule extends Modulo
         Configuracion::remove('emails.total');
     }
 
-    public function configutation()
+    public function configuration()
     {
+        if (Request::is('post')) {
+            $data = Request::post();
+            $data['user_id'] = Session::get('user.id');
+            $data['password'] = Utils::crypt($data['password']);
+            $data['ssl'] = (isset($data['ssl']) && intval($data['ssl']) == 1 ? 1 : 0);
+
+            emailsAccount::create($data);
+            Url::redirect(Url::generate('sync_inbox'));
+        }
+
+        $title = 'Cuentas de correo';
+        $data = array(
+            'title' => $title,
+            'emailsAccount' => emailsAccount::where('user_id', Session::get('user.id'))->get(),
+        );
+
+        self::$view->assign($data);
+        self::$view->render('configuration');
     }
 
-    public static function sync() {
+    public static function sync($cron = false)
+    {
         Eden::DECORATOR;
 
-        $imap = eden('mail')->imap(
-    	'mail.daniellucia.es',
-    	'hola@daniellucia.es',
-    	'Camarote69',
-    	143,
-    	false);
+        $emailsAccounts = emailsAccount::all();
+        foreach ($emailsAccounts as $emailAccount) {
+            try {
+                $imap = eden('mail')->imap(
+                $emailAccount->host,
+                $emailAccount->account,
+                Utils::decrypt($emailAccount->password),
+                $emailAccount->port,
+                ($emailAccount->ssl == 1 ? true : false)
+                );
 
-        $emails = [
-            'mailboxes' => $imap->setActiveMailbox('inbox')->getMailboxes(),
-            'mails' =>  $imap->getEmails(0, 50),
-            'total' => $imap->getEmailTotal(),
-        ];
+                $emails = [
+                    'mailboxes' => $imap->setActiveMailbox('inbox')->getMailboxes(),
+                    'mails' =>  $imap->getEmails(0, 50),
+                    'total' => $imap->getEmailTotal(),
+                ];
 
-        foreach ($emails['mails'] as $mailTemp) {
-            $body = '';
-            if (isset($mailTemp['uid'])) {
-                $email = $imap->getUniqueEmails($mailTemp['uid'], true);
-                if (isset($email['body'])) {
-                    if (isset($email['body']['text/html'])) {
-                        $body = $email['body']['text/html'];
+                foreach ($emails['mails'] as $mailTemp) {
+                    $body = '';
+                    if (isset($mailTemp['uid'])) {
+                        $email = $imap->getUniqueEmails($mailTemp['uid'], true);
+                        if (isset($email['body'])) {
+                            if (isset($email['body']['text/html'])) {
+                                $body = $email['body']['text/html'];
+                            }
+                        }
+                    }
+                    //echo '<pre>'.print_r($mailTemp, 1).'</pre>';
+                    $mail = [
+                        'id_email' => $mailTemp['id'],
+                        'uid' => $mailTemp['uid'],
+                        'mailbox' => $mailTemp['mailbox'],
+                        'user_id' => $emailAccount->user_id,
+                        'title' => $mailTemp['subject'],
+                        'email_from' => $mailTemp['from']['email'],
+                        'email_to' => json_encode($mailTemp['to']),
+                        'body' => $body,
+                        'date' => date('Y-m-d H:i:s', $mailTemp['date']),
+                    ];
+
+                    $emailDB = Emails::where(['id_email' => $mailTemp['id'], 'uid' => $mailTemp['uid']])->first();
+                    //echo '<pre>'.print_r($emailDB, 1).'</pre>';
+                    if (!$emailDB) {
+                        Emails::create($mail);
                     }
                 }
+                //die();
+                //Configuracion::set('emails.total', Emails::whereRead(0)->count());
 
+                $imap->disconnect();
             }
-            //echo '<pre>'.print_r($mailTemp, 1).'</pre>';
-            $mail = [
-                'id_email' => $mailTemp['id'],
-                'uid' => $mailTemp['uid'],
-                'mailbox' => $mailTemp['mailbox'],
-                'user_id' => Session::get('user.id'),
-                'title' => $mailTemp['subject'],
-                'email_from' => $mailTemp['from']['email'],
-                'email_to' => json_encode($mailTemp['to']),
-                'body' => $body,
-                'date' => date('Y-m-d H:i:s', $mailTemp['date']),
-            ];
-
-            $emailDB = Emails::where(['id_email' => $mailTemp['id'], 'uid' => $mailTemp['uid']])->first();
-            //echo '<pre>'.print_r($emailDB, 1).'</pre>';
-            if (!$emailDB) {
-                Emails::create($mail);
+            catch(Exception $e) {
+              Flash::set($e->getMessage(), 'error', 'Vaya!');
+              Url::redirect(Url::generate('inbox'));
             }
-
         }
-        //die();
-        Configuracion::set('emails.total', $emails['total']);
 
-        $imap->disconnect();
-        Url::redirect(Url::generate('inbox'));
+
+        if (!$cron) {
+            Url::redirect(Url::generate('inbox'));
+        }
     }
 
     public static function inbox()
     {
-
         $title = 'Bandeja de entrada';
         $data = array(
             'title' => $title,
@@ -168,18 +184,23 @@ class emailModule extends Modulo
 
     public static function inboxDetail($uid)
     {
-
         $title = 'Bandeja de entrada';
+        $email = Emails::whereUid(intval($uid))->where('user_id', Session::get('user.id'))->first();
         $data = array(
             'title' => $title,
-            'email' => Emails::whereUid(intval($uid))->where('user_id', Session::get('user.id'))->first(),
+            'email' => $email,
         );
+
+        Emails::whereUid(intval($uid))->where('user_id', Session::get('user.id'))->update(['leido' => 1]);
+
+        Configuracion::set('emails.total', Emails::whereLeido(0)->count());
 
         self::$view->assign($data);
         self::$view->render('detail');
     }
 
-    public static function Widget() {
-
+    public static function Widget()
+    {
+        return false;
     }
 }

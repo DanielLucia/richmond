@@ -10,6 +10,7 @@ class Emails extends Modelo
     protected $fillable = array(
         'id',
         'uid',
+        'leido',
         'id_email',
         'mailbox',
         'user_id',

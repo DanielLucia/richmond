@@ -209,13 +209,13 @@ class App
         } else {
 
             $error = '<h1>Not found</h1>';
+            $error .= '<h1>Match</h1>';
+            $error .= '<pre>'.print_r($match, 1).'</pre>';
             $error .= '<h1>Controllers</h1>';
             $error .= '<pre>'.print_r(self::$controllers, 1).'</pre>';
             $error .= '<pre>'.print_r(self::$modules, 1).'</pre>';
             $error .= '<h1>Map</h1>';
             $error .= '<pre>'.print_r($map, 1).'</pre>';
-            $error .= '<h1>Match</h1>';
-            $error .= '<pre>'.print_r($match, 1).'</pre>';
             $error .= '<h1>Rutas</h1>';
             $error .= '<pre>'.print_r(self::$router, 1).'</pre>';
             echo $error;

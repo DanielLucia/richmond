@@ -1,5 +1,5 @@
 <?php
 
 return array(
-  array('GET','/configuracion/backups/', 'backupsController#index', 'backups'),
+  array('GET','/configuration/backups/', 'backupsController#index', 'backups'),
 );

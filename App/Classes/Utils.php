@@ -6,6 +6,9 @@ use PHPMailer\PHPMailer\Exception;
 
 class Utils extends App
 {
+    private static $secret_key = '^qAe2pQzbSxu|K8U]G7{wKW@D;@:*+gqb5zA5X-O';
+    private static $secret_iv = 'WXgm+CpOT8sGf1}rFJ38I7xEm[5~CWV]ZrEeWmpc';
+
     public static function formatDate($date, $format = 'd/m/Y')
     {
         $date = new \DateTime($date);
@@ -94,20 +97,42 @@ class Utils extends App
 
     public static function createTable($name, $fields)
     {
-        $format = 'CREATE TABLE %s (%s)';
+        $format = 'CREATE TABLE `%s` (%s)';
+        $buffer = array();
+        if (!empty($fields)) {
+            foreach ($fields as $key => $field) {
+                $buffer[] = '`'.$key . '` ' . $field;
+            }
 
-        foreach ($fields as $field) {
-            $buffer[] = $field[0] . ' ' . $field[1];
+            $buffer = implode('; ', $buffer);
+            $result = sprintf($format, $name, $buffer);
+            $result = str_replace(';', ',', $result);
+
+            return $result;
         }
 
-        $buffer = implode('; ', $buffer);
-        $result = sprintf($format, $name, $buffer);
-        $result = str_replace(';', ',', $result);
+        return false;
 
-        return $result;
     }
 
     public static function table($table) {
         return getenv('DB_PREFIX').$table;
+    }
+
+    public static function crypt( $string ) {
+        $output = false;
+        $encrypt_method = "AES-256-CBC";
+        $key = hash( 'sha256', self::$secret_key );
+        $iv = substr( hash( 'sha256', self::$secret_iv ), 0, 16 );
+
+        return base64_encode( openssl_encrypt( $string, $encrypt_method, $key, 0, $iv ) );
+    }
+
+    public static function decrypt( $string ) {
+        $output = false;
+        $encrypt_method = "AES-256-CBC";
+        $key = hash( 'sha256', self::$secret_key );
+        $iv = substr( hash( 'sha256', self::$secret_iv ), 0, 16 );
+        return openssl_decrypt( base64_decode( $string ), $encrypt_method, $key, 0, $iv );
     }
 }
