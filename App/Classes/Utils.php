@@ -3,6 +3,7 @@ namespace Escuchable\App;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Utils extends App
 {
@@ -134,5 +135,9 @@ class Utils extends App
         $key = hash( 'sha256', self::$secret_key );
         $iv = substr( hash( 'sha256', self::$secret_iv ), 0, 16 );
         return openssl_decrypt( base64_decode( $string ), $encrypt_method, $key, 0, $iv );
+    }
+
+    public static function hasTable($table) {
+        return DB::select('show tables like "' . Utils::table($table).'"');
     }
 }

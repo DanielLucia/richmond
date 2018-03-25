@@ -27,5 +27,8 @@ $(document).ready(function() {
         return false;
     })
 
+    $('.showMenuAction').click(function() {
+        $('body').toggleClass('showSidebar')
+    })
 
 })

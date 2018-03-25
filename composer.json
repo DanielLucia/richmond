@@ -24,9 +24,10 @@
         "hautelook/phpass": "1.0.0",
         "filp/whoops": "^2.1",
         "daniellucia/hooks": "^0.2.3",
-        "eden/mail": "^4.0",
         "rah/danpu": "2.6.*",
         "mustangostang/spyc": "*",
-        "stolz/assets": "^0.1.11"
+        "stolz/assets": "^0.1.11",
+        "mtdowling/cron-expression": "^1.2",
+        "ddeboer/imap": "^0.5.2"
     }
 }

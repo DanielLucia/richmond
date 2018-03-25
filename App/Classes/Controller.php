@@ -14,7 +14,9 @@ class Controller extends App
         self::$assets->add(PUBLIC_FOLDER . 'css/font-awesome.css');
         self::$assets->add(PUBLIC_FOLDER . 'css/normalize.css');
         self::$assets->add(PUBLIC_FOLDER . 'css/estilos.css');
-        self::$assets->add(PUBLIC_FOLDER . 'css/simple-grid.min.css');
+        self::$assets->add(PUBLIC_FOLDER . 'css/desktop.css');
+        self::$assets->add(PUBLIC_FOLDER . 'css/mobile.css');
+        //self::$assets->add(PUBLIC_FOLDER . 'css/simple-grid.min.css');
         self::$assets->add(PUBLIC_FOLDER . 'css/forms.css');
         self::$assets->add(PUBLIC_FOLDER . 'css/toastr.css');
         self::$assets->add(PUBLIC_FOLDER . 'fonts/stylesheet.css');

@@ -1,5 +1,6 @@
 {if $showMenu}
-    <nav class="Sidebar">
+<a href="javascript:void(0);" class="showMenuAction Transition"><i class="fa fa-bars" aria-hidden="true"></i></a>
+    <nav class="Sidebar Scroll Transition">
         <aside>
             <p class="userIcon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></p>
             <h2 class="userName">{'user.name'|session}</h2>

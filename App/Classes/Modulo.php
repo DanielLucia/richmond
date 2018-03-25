@@ -3,6 +3,7 @@ namespace Escuchable\App;
 
 use Illuminate\Database\Query\Expression as raw;
 use Illuminate\Database\Capsule\Manager as DB;
+use Escuchable\App\Utils;
 
 class Modulo extends App
 {
@@ -79,15 +80,18 @@ class Modulo extends App
 
     public static function install() {
         foreach (static::$modelo['database'] as $db) {
-            //dd(Utils::createTable(Utils::table($db['table']), $db['fields']));
-            DB::statement(Utils::createTable(Utils::table($db['table']), $db['fields']));
-            DB::statement('ALTER TABLE `'.Utils::table($db['table']).'` CHANGE COLUMN `'.$db['primary'].'` `'.$db['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.$db['primary'].'`)');
+            if (!Utils::hasTable($db['table'])) {
+                DB::statement(Utils::createTable(Utils::table($db['table']), $db['fields']));
+                DB::statement('ALTER TABLE `'.Utils::table($db['table']).'` CHANGE COLUMN `'.$db['primary'].'` `'.$db['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.$db['primary'].'`)');
+            }
         }
     }
 
     public static function uninstall() {
         foreach (static::$modelo['database'] as $db) {
-            DB::statement('DROP TABLE ' . Utils::table($db['table']));
+            if (Utils::hasTable($db['table'])) {
+                DB::statement('DROP TABLE ' . Utils::table($db['table']));
+            }
         }
     }
 }

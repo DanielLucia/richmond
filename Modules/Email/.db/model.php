@@ -38,5 +38,17 @@ return [
                 'updated_at' => 'DATETIME',
             ]
         ],
+        [
+            'table' => 'emails_mailboxes',
+            'primary' => 'id',
+            'fields' => [
+                'id' => 'INT',
+                'user_id' => 'INT',
+                'email_account' => 'INT',
+                'title' => 'VARCHAR (200)',
+                'created_at' => 'DATETIME',
+                'updated_at' => 'DATETIME',
+            ]
+        ],
     ]
 ];

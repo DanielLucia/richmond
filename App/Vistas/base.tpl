@@ -1,35 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        {include file="Includes/Elements/metatags.tpl"}
-        {include file="Includes/Elements/css.tpl"}
-    </head>
-    <body class="{if $showMenu}showMenu{/if}">
+<head>
+    {include file="Includes/Elements/metatags.tpl"} {include file="Includes/Elements/css.tpl"}
+</head>
+
+<body class="{if $showMenu}showMenu{/if}">
+    <div class="App Flex">
         {include file="Includes/Elements/header.tpl"}
-        <div class="Contenido">
-
-
-            <div class="container">
-                {if $flash}
-                <div class="row">
-                    <div class="col-12 Alert">
-                        <p><strong>{$flash.title}</strong></p>
-                        <p>{$flash.content}</p>
-                    </div>
-                </div>
-                {/if}
-                {if $title && $showMenu}
-                <div class="row">
-                    <h2 class="col-12 Subtitulo">{$title}</h2>
-                </div>
-                {/if}
-                {include file="$content"}
-                {if $showMenu}
-                    {include file="Includes/Elements/footer.tpl"}
-                {/if}
+        {include file="Includes/Elements/submenu.tpl"}
+        <div class="Contenido Scroll Transition">
+            {if $title && $showMenu}
+            <h2 class="Subtitulo">{$title}</h2> {/if} {if $flash}
+            <div class="Alert">
+                <p><strong>{$flash.title}</strong></p>
+                <p>{$flash.content}</p>
             </div>
-
+            {/if} {include file="$content"} {if $showMenu} {include file="Includes/Elements/footer.tpl"} {/if}
         </div>
-        {include file="Includes/Elements/javascript.tpl"}
-    </body>
+    </div>
+    {include file="Includes/Elements/javascript.tpl"}
+</body>
 </html>

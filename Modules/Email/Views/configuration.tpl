@@ -1,6 +1,6 @@
 
     <div class="row">
-        <div class="col4">
+        <div class="col-4">
             <form action="{'emails_accounts'|url}" method="post">
                 <p><input type="email" name="account" placeholder="E-Mail" class="Text" /></p>
                 <p><input type="text" name="host" placeholder="Servidor" class="Text" /></p>

@@ -18,12 +18,14 @@ use Escuchable\App\Flash;
 
 use Escuchable\Modelos\Emails;
 use Escuchable\Modelos\emailsAccount;
+use Escuchable\Modelos\emailsMailboxes;
 use Escuchable\Modelos\Cronjobs;
 use Escuchable\Modelos\Widgets;
 use Escuchable\Modelos\Configuracion;
 
 use Illuminate\Database\Query\Expression as raw;
 use Illuminate\Database\Capsule\Manager as DB;
+use Ddeboer\Imap\Server;
 
 class emailModule extends Modulo
 {
@@ -124,6 +126,14 @@ class emailModule extends Modulo
                     'total' => $imap->getEmailTotal(),
                 ];
 
+                foreach ($emails['mailboxes'] as $mailbox) {
+                    $emailDB = emailsMailboxes::where(['title' => $mailbox, 'user_id' =>  Session::get('user.id'), 'email_account' => $emailAccount['id']])->first();
+                    //echo '<pre>'.print_r($emailDB, 1).'</pre>';
+                    if (!$emailDB) {
+                        emailsMailboxes::create(['title' => $mailbox, 'user_id' =>  Session::get('user.id'), 'email_account' => $emailAccount['id']]);
+                    }
+                }
+
                 foreach ($emails['mails'] as $mailTemp) {
                     $body = '';
                     if (isset($mailTemp['uid'])) {
@@ -173,6 +183,11 @@ class emailModule extends Modulo
     public static function inbox()
     {
         $title = 'Bandeja de entrada';
+        $mailboxes = emailsMailboxes::get();
+        foreach ($mailboxes as $mailbox) {
+            Menu::add(2, array('submenu'), $mailbox->title, 'emails_accounts');
+        }
+
         $data = array(
             'title' => $title,
             'emails' => Emails::orderBy('date', 'desc')->get(),

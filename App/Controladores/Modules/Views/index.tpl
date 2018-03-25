@@ -1,7 +1,7 @@
 <table class="Table">
     <thead>
         <tr>
-            <th width="200"></th>
+            <th class="hiddenMobile" width="200"></th>
             <th>Módulo</th>
             <th>Descripción</th>
             <th width="250"></th>
@@ -9,7 +9,7 @@
     </thead>
     {foreach from=$modules key=key item=item}
         <tr>
-            <td>{$key}</td>
+            <td class="hiddenMobile">{$key}</td>
             <td>
                 <strong>{$item.Title}</strong>
                 {if $item.Author}
