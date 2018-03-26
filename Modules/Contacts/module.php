@@ -26,7 +26,7 @@ class contactsModule extends Modulo
     {
         $this->route = __DIR__;
         $this->has_configuration = false;
-        self::$modelo = Spyc::YAMLLoad($this->route . '/.db/model.yml');
+        self::$modelo = include($this->route . '/.db/model.php');
 
         //Menu
         Menu::add(1, array('sidebar'), 'Contactos', 'contacts', 'address-book-o');
@@ -36,13 +36,12 @@ class contactsModule extends Modulo
 
     public static function install()
     {
-        DB::statement(Utils::createTable(Utils::table(self::$modelo['table']), self::$modelo['fields']));
-        DB::statement('ALTER TABLE `'.Utils::table(self::$modelo['table']).'` CHANGE COLUMN `'.self::$modelo['primary'].'` `'.self::$modelo['primary'].'` INT(11) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`'.self::$modelo['primary'].'`)');
+        parent::install();
     }
 
     public static function uninstall()
     {
-        DB::statement('DROP TABLE ' . Utils::table(self::$modelo['table']));
+        parent::uninstall();
     }
 
     public function configuration()

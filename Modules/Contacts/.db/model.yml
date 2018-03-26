@@ -1,9 +1,0 @@
-table: contacts
-primary: id
-fields:
-    id: INT
-    user_id: INT
-    nombre: VARCHAR (100)
-    telefono: VARCHAR (200)
-    created_at: DATETIME
-    updated_at: DATETIME
