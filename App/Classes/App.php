@@ -38,12 +38,9 @@ class App
     public static function init()
     {
         Url::checkHttps();
+        Carbon::setLocale('es');
 
         self::$hooks = new Manager;
-        if (Request::is('post')) {
-            self::$hooks->action->run("form.post");
-        }
-        Carbon::setLocale('es');
         self::$router = new AltoRouter();
         self::$logger = new Logger(ROOT . 'App/Log');
         self::$hasher = new PasswordHash(8, false);
@@ -199,6 +196,10 @@ class App
             $controller = new self::$section[$match['name']]['controller'];
 
             Menu::setActual($match['name']);
+
+            if (Request::is('post')) {
+                self::$hooks->action->run('form.post');
+            }
 
             if ((!isset($controller->login) || $controller->login == false) && !Auth::isLogin()) {
                 Url::redirect(Url::generate('login'));

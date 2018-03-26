@@ -11,6 +11,8 @@ class Auth extends App
 {
     public static function login()
     {
+        self::$hooks->action->run('login.before');
+
         if (Request::post('email') && Request::post('password')) {
             $data = Usuarios::where('email', Request::post('email'))->first();
             if ((bool) $data !== false) {
@@ -19,6 +21,8 @@ class Auth extends App
                     Session::set('user.name', $data->nombre);
                     Session::set('user.email', $data->email);
 
+                    self::$hooks->action->run('login.success');
+
                     return true;
                 } else {
                     Flash::set('El usuario o la clave son incorrectas', 'error', 'Vaya!');
@@ -26,11 +30,11 @@ class Auth extends App
             } else {
                 Flash::set('El usuario o la clave son incorrectas', 'error', 'Vaya!');
             }
-
-            return false;
         } else {
             Flash::set('Faltan campos', 'error', 'Oh!');
         }
+
+        self::$hooks->action->run('login.failed');
         return false;
     }
 
