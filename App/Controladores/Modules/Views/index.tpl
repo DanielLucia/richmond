@@ -20,12 +20,12 @@
             <td>{$item.Description}</td>
             <td class="textRight">
                 {if $item.installed && $item.configuration}
-                    <a href="{$item.configuration}" class="Button Small">Configuración</a>
+                    <a href="{$item.configuration}" class="Button Small Link">Configuración</a>
                 {/if}
                 {if $item.installed}
-                    <a href="{$item.url_action}" class="Button Small Danger Question" data-question="¿Estás seguro? Se perderán todos los datos realitvos al módulo.">Desinstalar</a>
+                    <a href="{$item.url_action}" class="Button Small Danger Question Link" data-question="¿Estás seguro? Se perderán todos los datos realitvos al módulo.">Desinstalar</a>
                 {else}
-                    <a href="{$item.url_action}" class="Button Small">Instalar</a>
+                    <a href="{$item.url_action}" class="Button Small Link">Instalar</a>
                 {/if}
             </td>
         </tr>

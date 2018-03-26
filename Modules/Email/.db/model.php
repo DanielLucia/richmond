@@ -11,7 +11,7 @@ return [
                 'uid' => 'INT',
                 'account_email' => 'INT',
                 'user_id' => 'INT',
-                'leido' => 'INT',
+                'seen' => 'INT',
                 'id_email' => 'VARCHAR (150)',
                 'title' => 'VARCHAR (200)',
                 'email_from' => 'VARCHAR (100)',

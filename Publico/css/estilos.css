@@ -43,6 +43,17 @@ a {
     text-decoration: none;
 }
 
+.Draggable {
+    cursor: move;
+}
+tr.Draggable.ui-draggable-dragging {
+    background-color: #fafafa;
+    border: 4px dashed rgba(0,0,0,.5);
+}
+.ui-droppable-hover {
+    background-color: #fafafa;
+    border: 4px dashed rgba(0,0,0,.5);
+}
 .Transition, .Button {
     -webkit-transition: all 0.15s ease;
     -moz-transition: all 0.15s ease;
@@ -72,9 +83,10 @@ a {
 }
 
 .Submenu {
-    background-color: #d0d2d8;
+    background-color: #fafafa;
     position: relative;
     z-index: 2;
+    border-right: 1px solid rgba(0,0,0,.05);
 }
 
 .Submenu a {
@@ -82,8 +94,11 @@ a {
     padding: 12px 30px;
     color: #000;
     text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,.05);
 }
-
+.Submenu a:hover, .Submenu a.Selected {
+    background-color: rgba(0,0,0,.02);
+}
 .Sidebar {
     box-sizing: border-box;
     color: #fff;
@@ -150,7 +165,7 @@ a {
 
 .showMenu .navBar {
     display: block;
-    padding: 10px 40px;
+    padding: 5px 40px;
     box-sizing: border-box;
     position: fixed;
     top: 0;
@@ -158,6 +173,7 @@ a {
     left: 0;
     background-color: rgba(255, 255, 255, .85);
     z-index: 3;
+    border-bottom: 1px solid rgba(0,0,0,.05);
 }
 
 .showMenu .navBar li {
@@ -244,35 +260,33 @@ a {
     border-spacing: 0;
     border-collapse: separate;
     background-color: #fafafa;
-}
-
-.Table thead {
-    color: #fff;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3f4a59+0,646189+100 */
-    background: rgb(63, 74, 89);
-    /* Old browsers */
-    background: -moz-linear-gradient(45deg, rgba(63, 74, 89, 1) 0%, rgba(100, 97, 137, 1) 100%);
-    /* FF3.6-15 */
-    background: -webkit-linear-gradient(45deg, rgba(63, 74, 89, 1) 0%, rgba(100, 97, 137, 1) 100%);
-    /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(45deg, rgba(63, 74, 89, 1) 0%, rgba(100, 97, 137, 1) 100%);
-    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3f4a59', endColorstr='#646189', GradientType=1);
-    /* IE6-9 fallback on horizontal gradient */
+    border: 1px solid rgba(0,0,0,.05);
 }
 
 .Table th {
-    padding: 12px;
+    padding: 5px;
     text-align: left;
+    font-size: 11px;
+    font-weight: normal;
 }
 
 .Table td {
     text-align: left;
     padding: 12px;
     vertical-align: top;
-    border-top: 3px solid #fff;
+    border-top: 1px solid rgba(0,0,0,.05);
 }
-
+.Droppable.Table td, .Droppable.Table th {
+    display: block;
+    border: none;
+    padding: 10px;
+}
+.Droppable.Table tr {
+    border-top: 1px solid rgba(0,0,0,.05);
+}
+.Droppable.Table td:first-child, .Droppable.Table td:last-child, .Droppable.Table th:first-child, .Droppable.Table th:last-child {
+    display: none;
+}
 footer {
     box-sizing: border-box;
     background-color: #fafafa;
@@ -290,6 +304,9 @@ footer {
 
 .Box {
     padding: 30px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.05);
     margin: 30px 0;
+}
+.Box.Table {
+    padding: 0;
 }

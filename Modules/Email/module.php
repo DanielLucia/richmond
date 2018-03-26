@@ -36,7 +36,7 @@ class emailModule extends Modulo
         self::$modelo = include($this->route . '/.db/model.php');
 
         //Menu
-        Menu::add(1, array('navbar'), 'Bandeja de entrada', 'inbox', 'envelope-o');
+        Menu::add(3, array('navbar'), 'Bandeja de entrada', 'inbox', 'envelope-o');
         Menu::add(2, array('configuracion'), 'Cuentas de correo', 'emails_accounts');
 
         //Hooks
@@ -132,7 +132,11 @@ class emailModule extends Modulo
                     if (!$emailDB) {
                         emailsMailboxes::create(['title' => $mailbox, 'user_id' =>  Session::get('user.id'), 'email_account' => $emailAccount['id']]);
                     }
+
+                    Configuracion::set('emails.'.$mailbox.'.total', Emails::whereSeen(0)->whereMailbox($mailbox)->count());
                 }
+
+                Configuracion::set('emails.total', Emails::whereSeen(0)->count());
 
                 foreach ($emails['mails'] as $mailTemp) {
                     $body = '';
@@ -163,8 +167,6 @@ class emailModule extends Modulo
                         Emails::create($mail);
                     }
                 }
-                //die();
-                //Configuracion::set('emails.total', Emails::whereRead(0)->count());
 
                 $imap->disconnect();
             }
@@ -182,6 +184,12 @@ class emailModule extends Modulo
 
     public static function inbox()
     {
+
+        self::$assets->add(MODULES_FOLDER . 'Email/js/functions.js');
+
+        Menu::add(1, array('navbar'), 'Actualizar', 'sync_inbox', 'refresh');
+        Menu::add(0, array('navbar'), 'Nuevo', 'sync_inbox', 'envelope', 'Danger');
+
         $title = 'Bandeja de entrada';
         $mailboxes = emailsMailboxes::get();
         foreach ($mailboxes as $mailbox) {
@@ -200,15 +208,21 @@ class emailModule extends Modulo
     public static function inboxDetail($uid)
     {
         $title = 'Bandeja de entrada';
+
+        $mailboxes = emailsMailboxes::get();
+        foreach ($mailboxes as $mailbox) {
+            Menu::add(2, array('submenu'), $mailbox->title, 'emails_accounts');
+        }
+
         $email = Emails::whereUid(intval($uid))->where('user_id', Session::get('user.id'))->first();
         $data = array(
             'title' => $title,
             'email' => $email,
         );
 
-        Emails::whereUid(intval($uid))->where('user_id', Session::get('user.id'))->update(['leido' => 1]);
+        Emails::whereUid(intval($uid))->where('user_id', Session::get('user.id'))->update(['seen' => 1]);
 
-        Configuracion::set('emails.total', Emails::whereLeido(0)->count());
+        Configuracion::set('emails.total', Emails::whereSeen(0)->count());
 
         self::$view->assign($data);
         self::$view->render('detail');

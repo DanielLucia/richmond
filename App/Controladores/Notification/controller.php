@@ -14,12 +14,12 @@ class notificationController extends Controller
 
     public function __construct()
     {
-        Menu::add(1, array('navbar'), 'Notificaciones', 'notifications', 'comment-o');
+        Menu::add(4, array('navbar'), 'Notificaciones', 'notifications', 'comment-o');
     }
 
     public static function index()
     {
-        self::addAssets(); 
+        self::addAssets();
 
         $title = 'Notificaciones';
         $data = array(

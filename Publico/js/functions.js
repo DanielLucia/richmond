@@ -17,13 +17,9 @@ $(document).ready(function() {
     $('.Question').click(function() {
         var Texto = $(this).data('question')
         var Url = $(this).attr('href')
-        $.alertable.confirm(Texto, {
-            cancelButton: '<button class="Button Danger" type="button">Cancelar</button>',
-            okButton: '<button class="Button" type="button">Aceptar</button>'
-        }).then(function(Url) {
-            console.log(Url)
+        if (confirm(Texto)) {
             location.href = Url
-        })
+        }
         return false;
     })
 

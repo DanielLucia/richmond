@@ -10,7 +10,7 @@ class Menu extends App
     private static $_elementos = array();
     private static $actual = false;
 
-    public static function add($prioridad = 0, $lugares = array(), $texto = '', $id = '#', $icon = false)
+    public static function add($prioridad = 0, $lugares = array(), $texto = '', $id = '#', $icon = false, $class = false)
     {
         if (!empty($lugares)) {
             foreach ($lugares as $lugar) {
@@ -19,6 +19,7 @@ class Menu extends App
                     'id' => $id,
                     'url' => $id != '#' ? Url::generate($id) :'',
                     'icon' => $icon,
+                    'class' => $class,
                 );
             }
         }

@@ -1,0 +1,45 @@
+.Container {
+    overflow: hidden;
+    width: 100%;
+}
+*[class^='Col-']{
+    float: left;
+    box-sizing: border-box;
+    padding: 0 15px;
+}
+.Col-1 {
+    width: 8.333333333%;
+}
+.Col-2 {
+    width: 16.666666666%;
+}
+.Col-3 {
+    width: 24.999999999%;
+}
+.Col-4 {
+    width: 33.333333332%;
+}
+.Col-5 {
+    width: 41.666666665%;
+}
+.Col-6 {
+    width: 49.999999998%;
+}
+.Col-7 {
+    width: 58.333333331%;
+}
+.Col-8 {
+    width: 66.666666664%;
+}
+.Col-9 {
+    width: 74.999999997%;
+}
+.Col-10 {
+    width: 83.33333333%;
+}
+.Col-11 {
+    width: 91.666666663%;
+}
+.Col-12 {
+    width: 100%;
+}

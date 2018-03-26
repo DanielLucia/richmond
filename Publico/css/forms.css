@@ -47,3 +47,14 @@ label {
     font-size: 11px;
     font-weight: normal;
 }
+.Button.Link {
+    padding: 0;
+    background-color: transparent;
+    color: #5b68bc;
+}
+.Button.Link.Danger {
+    color: #b83b39;
+}
+.Button.Link:hover {
+    text-decoration: underline;
+}

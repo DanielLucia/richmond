@@ -29,6 +29,6 @@ define('BASE_URL', getenv('BASE_URL'));
 
 //Otras rutas
 define('PUBLIC_FOLDER', BASE_URL . 'Publico/');
-define('MODULES_FOLDER', BASE_URL . 'Modulos/');
+define('MODULES_FOLDER', BASE_URL . 'Modules/');
 
 include(ROOT . 'App/Classes/Funciones.php');

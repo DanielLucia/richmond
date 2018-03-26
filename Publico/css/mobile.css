@@ -48,15 +48,25 @@
     }
     .Table td {
         display: block;
-        text-align: center !important;
+        text-align: left !important;
         width: 100%;
         box-sizing: border-box;
+        border: none;
+    }
+    .Table td:last-child {
+        border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+    .Table td:first-child {
+        display: none;
     }
     .Table th {
         display: none;
     }
     .Table th:first-child {
         display: block;
+    }
+    .Table tr {
+        position: relative;
     }
     .Login {
         padding: 20px;
